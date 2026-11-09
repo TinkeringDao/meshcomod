@@ -1,5 +1,8 @@
 name: Firmware Builder
 
+permissions:
+  contents: write
+
 on:
   workflow_call:
     inputs:
@@ -20,6 +23,8 @@ jobs:
 
       - name: Clone Repo
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-environment
@@ -48,6 +53,8 @@ jobs:
 
       - name: Clone Repo
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-environment
@@ -71,6 +78,8 @@ jobs:
 
       - name: Clone Repo
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-environment

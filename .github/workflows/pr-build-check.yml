@@ -1,5 +1,8 @@
 name: PR Build Check
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     branches: [main, dev]
@@ -33,6 +36,8 @@ jobs:
     steps:
       - name: Clone Repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-environment

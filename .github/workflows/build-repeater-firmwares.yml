@@ -4,6 +4,9 @@
 
 name: Build Repeater Firmwares
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
@@ -20,6 +23,8 @@ jobs:
 
       - name: Clone Repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-environment

@@ -2,6 +2,13 @@
 
 # meshcomod
 
+> [!IMPORTANT]
+> **Unofficial Non-Commercial Open-Source Project, Trademark Notice & RF Regulatory Compliance (`LEGAL.md`)**
+> **`meshcomod`** is an independent, non-commercial free and open-source software (FOSS) fork and multi-transport extension of [MeshCore](https://github.com/meshcore-dev/MeshCore), provided under the [MIT License](LICENSE) outside the course of any commercial activity (**EU Cyber Resilience Act `Regulation (EU) 2024/2847` Recitals 15 & 18, `Art. 2(5)`; EU Product Liability Directive `Directive (EU) 2024/2853` `Art. 2(2)` & Recitals 14, 15, 24**).
+> - **Non-Affiliation & Nominative Fair Use:** This project is **not affiliated with, sponsored by, or endorsed by Ripple Radios / MeshCore, Heltec Automation, LilyGo, Seeed Studio (`SenseCAP`), RAKwireless (`WisBlock`), Elecrow (`ThinkNode`), B&Q Consulting (`Station G2`), Semtech (`LoRa`, `SX1262`), Espressif Systems (`ESP32`), Nordic Semiconductor (`nRF52840`), or STMicroelectronics (`STM32`)**. All brand and model names are referenced strictly as indications of intended purpose and nominative fair use to indicate target hardware compatibility (`Article 14(1)(c) of Regulation (EU) 2017/1001 (EUTMR)`, `15 U.S.C. §§ 1115(b)(4), 1125`).
+> - **Interoperability & Authorized Local Owner Execution Only:** Developed and distributed for hardware/software interoperability (`Directive 2009/24/EC (Articles 1(2), 5(3), 6, 8)`; `Article 3(1)(b) of Directive (EU) 2016/943`; `17 U.S.C. §§ 102(b), 107, 1201(f)`; `18 U.S.C. § 1839(6)(B) (DTSA)`). Targets open microcontroller platforms via documented bootloaders, circumvents **zero** Technological Protection Measures (`17 U.S.C. § 1201(a)`), and is intended solely for authorized local owner execution on hardware owned by the user (`18 U.S.C. § 1030 (CFAA)`).
+> - **Radio Frequency (RF), High-Power PA & Duty-Cycle Compliance (`Directive 2014/53/EU (RED)` / `ETSI EN 300 220-1/-2` / `ERC/REC 70-03` / `Decision (EU) 2017/1483` / `FCC 47 C.F.R. Part 15.247 / Part 97`):** The **hardware operator is solely and exclusively responsible** for configuring legal carrier frequencies, bandwidths, duty cycles (e.g., `<= 25 mW` / `+14 dBm` ERP at `<= 1%` duty cycle in `868.0–868.6 MHz` SRD Sub-band `g1`; `<= 500 mW` / `+27 dBm` ERP at `<= 10%` duty cycle in `869.400–869.650 MHz` SRD Sub-band `g3`), and accounting for external Power Amplifier (`PA` / `FEM`) and antenna gain (`dBi`). Cryptographic encryption is prohibited on Amateur Radio bands (`ITU Radio Regulations Art. 25.2A` / `47 C.F.R. § 97.113(a)(4)`). Provided **"AS IS"** without warranty (`AS IS Warranty Disclaimer`). See **[`LEGAL.md`](LEGAL.md)** for full statutory, regulatory, and battery/PMIC safety notices.
+
 A **multi-transport companion** firmware built on top of [MeshCore](https://github.com/meshcore-dev/MeshCore) for **Heltec** and **Seeed** LoRa devices (OLED / e-ink / headless). **One build serves USB + Bluetooth + TCP at the same time**, so you can drive the radio from a phone app, the web client, or Home Assistant — together.
 
 Upstream: **[github.com/meshcore-dev/MeshCore](https://github.com/meshcore-dev/MeshCore)** (MeshCore is a lightweight multi-hop LoRa mesh; see their repo for the protocol, mobile clients, and the canonical flasher).
@@ -202,6 +209,6 @@ Contributing to **upstream MeshCore**? Use their `dev` branch for PRs; open an I
 
 ---
 
-## License
+## License & Legal Notice
 
-Same as MeshCore (see [license.txt](license.txt)). MeshCore is MIT.
+Licensed under the **MIT License** — see [`LICENSE`](LICENSE) and [`license.txt`](license.txt). For trademark nominative fair use (indication of intended purpose), statutory interoperability, EU CRA/PLD non-commercial open-source exemptions, and RF regulatory compliance (`Directive 2014/53/EU (RED)`, `ETSI EN 300 220-1/-2`, `ERC/REC 70-03`, `Decision (EU) 2017/1483`, `FCC 47 C.F.R. Part 15.247 / Part 97`), see [`LEGAL.md`](LEGAL.md).
