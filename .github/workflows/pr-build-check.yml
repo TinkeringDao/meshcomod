@@ -10,6 +10,9 @@ on:
       - 'src/**'
       - 'examples/**'
       - 'variants/**'
+      - 'arch/**'
+      - 'lib/**'
+      - 'include/**'
       - 'platformio.ini'
       - '.github/workflows/pr-build-check.yml'
   push:
@@ -18,6 +21,9 @@ on:
       - 'src/**'
       - 'examples/**'
       - 'variants/**'
+      - 'arch/**'
+      - 'lib/**'
+      - 'include/**'
       - 'platformio.ini'
       - '.github/workflows/pr-build-check.yml'
 

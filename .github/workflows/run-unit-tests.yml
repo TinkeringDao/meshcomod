@@ -8,7 +8,23 @@ on:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - 'variants/**'
+      - 'arch/**'
+      - 'lib/**'
+      - 'include/**'
+      - 'test/**'
+      - 'platformio.ini'
   pull_request:
+    paths:
+      - 'src/**'
+      - 'variants/**'
+      - 'arch/**'
+      - 'lib/**'
+      - 'include/**'
+      - 'test/**'
+      - 'platformio.ini'
   workflow_dispatch:
 
 jobs:
