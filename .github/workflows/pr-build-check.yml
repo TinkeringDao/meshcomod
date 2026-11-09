@@ -14,7 +14,6 @@ on:
       - 'lib/**'
       - 'include/**'
       - 'platformio.ini'
-      - '.github/workflows/pr-build-check.yml'
   push:
     branches: [main, dev]
     paths:
@@ -25,7 +24,6 @@ on:
       - 'lib/**'
       - 'include/**'
       - 'platformio.ini'
-      - '.github/workflows/pr-build-check.yml'
 
 jobs:
   build:

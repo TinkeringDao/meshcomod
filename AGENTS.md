@@ -50,6 +50,16 @@ All changes in `TinkeringDao/meshcomod` follow the **6-Stage Autonomous Developm
    - Never commit personal names, private email addresses, home locations, GPS coordinates, Wi-Fi SSIDs/passwords, or secret tokens.
    - Keep all primary documentation in clean English while preserving `## Addendum: German Statutory References (Applicable to Residents of Germany)` in [`LEGAL.md`](LEGAL.md).
 
+### Pre-Merge Verification & RF Safety Gate Checklist
+
+| Gate | Requirement | Verification Standard |
+|---|---|---|
+| **1. OPSEC & Zero-PII** | Zero personal identifiers, local paths, Wi-Fi credentials, or tokens in diff | Automated Gate 1 in `.github/workflows/autonomous-pr-review.yml` |
+| **2. Signed Commits** | All commits authored by `TinkeringDao <203040288+TinkeringDao@users.noreply.github.com>` with ED25519 SSH signature (`-S -s`) | Automated Gate 2 (`gpgsig` verification) |
+| **3. RF ERP & Duty Cycle** | `SX1262` / `LR1110` / `SX1276` & external PA/FEM configs respect `<= 1%` (`g1`) / `<= 10%` (`g3`) duty cycle & ERP limits (`ETSI EN 300 220-1/-2`, `Directive 2014/53/EU`, `FCC Part 15.247`) | Variant & radio preset audit (`variants/`, `LEGAL.md`) |
+| **4. PMIC & Battery Safety** | `AXP2101` / `AXP192` / `BQ25896` charge termination `<= 4.20–4.288 V` and `0–45 °C` NTC thermal protection preserved | Driver & board variant review (`variants/`) |
+| **5. Clean-Room & Legal** | `MIT` headers intact; `LEGAL.md` retains `Addendum: German Statutory References` | Automated Gate 3 & Stage 4B Agentic Review |
+
 ---
 
 ## Prebuilt Firmware Release Playbook (`prebuilt/` on `main`)

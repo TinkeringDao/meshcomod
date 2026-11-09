@@ -49,6 +49,16 @@ All contributions must comply with [`LEGAL.md`](LEGAL.md) and [`LICENSE`](LICENS
 - **No Proprietary Vendor Blobs**: Do not commit decompiled proprietary code, NDA-restricted SDK files, or third-party corporate logos/trademarks beyond factual hardware compatibility identifiers (indication of intended purpose and nominative fair use under `Article 14(1)(c) of Regulation (EU) 2017/1001 (EUTMR)` and `15 U.S.C. §§ 1115(b)(4), 1125`; see [`LEGAL.md`](LEGAL.md)).
 - **RF & Hardware Safety**: Board variant additions (`variants/`) must accurately document external Power Amplifier (`PA` / `FEM`) gain pins and PMIC voltage rails so operators can maintain compliance with `Directive 2014/53/EU (RED)`, `ETSI EN 300 220-1/-2`, `ETSI EN 300 328`, `ERC/REC 70-03`, `Decision (EU) 2017/1483`, and `FCC 47 C.F.R. Part 15.247 / Part 97` (see [`LEGAL.md`](LEGAL.md)).
 
+### Pre-Merge Verification & RF Safety Gate Checklist
+
+| Gate | Requirement | Verification Standard |
+|---|---|---|
+| **1. OPSEC & Zero-PII** | Zero personal identifiers, local paths, Wi-Fi credentials, or tokens in diff | Automated Gate 1 in `.github/workflows/autonomous-pr-review.yml` |
+| **2. Signed Commits** | All commits authored by `TinkeringDao <203040288+TinkeringDao@users.noreply.github.com>` with ED25519 SSH signature (`-S -s`) | Automated Gate 2 (`gpgsig` verification) |
+| **3. RF ERP & Duty Cycle** | `SX1262` / `LR1110` / `SX1276` & external PA/FEM configs respect `<= 1%` (`g1`) / `<= 10%` (`g3`) duty cycle & ERP limits (`ETSI EN 300 220-1/-2`, `Directive 2014/53/EU`, `FCC Part 15.247`) | Variant & radio preset audit (`variants/`, `LEGAL.md`) |
+| **4. PMIC & Battery Safety** | `AXP2101` / `AXP192` / `BQ25896` charge termination `<= 4.20–4.288 V` and `0–45 °C` NTC thermal protection preserved | Driver & board variant review (`variants/`) |
+| **5. Clean-Room & Legal** | `MIT` headers intact; `LEGAL.md` retains `Addendum: German Statutory References` | Automated Gate 3 & Stage 4B Agentic Review |
+
 ## Coding Style
 
 Please follow the existing C++ style (per `.clang-format`):
