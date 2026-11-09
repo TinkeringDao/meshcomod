@@ -10,16 +10,20 @@ on:
       - 'src/**'
       - 'examples/**'
       - 'variants/**'
+      - 'arch/**'
+      - 'lib/**'
+      - 'include/**'
       - 'platformio.ini'
-      - '.github/workflows/pr-build-check.yml'
   push:
     branches: [main, dev]
     paths:
       - 'src/**'
       - 'examples/**'
       - 'variants/**'
+      - 'arch/**'
+      - 'lib/**'
+      - 'include/**'
       - 'platformio.ini'
-      - '.github/workflows/pr-build-check.yml'
 
 jobs:
   build:
