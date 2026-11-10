@@ -2,11 +2,13 @@
 
 # meshcomod
 
-A **multi-transport companion** firmware built on top of [MeshCore](https://github.com/meshcore-dev/MeshCore) for **Heltec** and **Seeed** LoRa devices (OLED / e-ink / headless). **One build serves USB + Bluetooth + TCP at the same time**, so you can drive the radio from a phone app, the web client, or Home Assistant — together.
+A **multi-transport companion** firmware built on top of [MeshCore](https://github.com/meshcore-dev/MeshCore) for **Heltec**, **Seeed**, and **Elecrow** LoRa devices (OLED / e-ink / headless). **One build serves USB + Bluetooth + TCP at the same time**, so you can drive the radio from a phone app, the web client, or Home Assistant together.
+
+This fork of [ALLFATHER-BV/meshcomod](https://github.com/ALLFATHER-BV/meshcomod) carries core library fixes for the Elecrow ThinkNode M9 (`nRF52840` + `LR1110`): sub-GHz image/PLL calibration, hardware charger-pin state reporting, ADC2 battery voltage filtering, and SPI/deep-sleep peripheral teardown (developed alongside the touch-UI port merged upstream in [ALLFATHER-BV/wadamesh#826](https://github.com/ALLFATHER-BV/wadamesh/pull/826) for `beta_103`), plus native C++ seam tests in CI.
 
 Upstream: **[github.com/meshcore-dev/MeshCore](https://github.com/meshcore-dev/MeshCore)** (MeshCore is a lightweight multi-hop LoRa mesh; see their repo for the protocol, mobile clients, and the canonical flasher).
 
-> **🖐️ Looking for the touch UI?** The standalone on-device LVGL interface for the **Heltec V4 TFT** and **LilyGo T-Deck** now lives in its own project: **[ALLFATHER-BV/wadamesh](https://github.com/ALLFATHER-BV/wadamesh)**. This repo is the OLED/e-ink companion firmware (the MeshCore core it builds on) only.
+> **Looking for the touch UI?** The standalone on-device LVGL interface for the **Heltec V4 TFT** and **LilyGo T-Deck** now lives in its own project: **[ALLFATHER-BV/wadamesh](https://github.com/ALLFATHER-BV/wadamesh)**. This repo is the OLED/e-ink companion firmware (the MeshCore core it builds on) only.
 
 > **Experimental — use at your own risk.** This firmware is not officially supported. Flashing custom firmware may have unexpected effects; you are responsible for your use of it. No warranty is provided.
 
@@ -202,6 +204,7 @@ Contributing to **upstream MeshCore**? Use their `dev` branch for PRs; open an I
 
 ---
 
-## License
+## License & Legal Notice
 
-Same as MeshCore (see [license.txt](license.txt)). MeshCore is MIT.
+Licensed under the [MIT License](LICENSE) (see also [license.txt](license.txt)).
+Independent, non-commercial open-source fork; operators are responsible for local RF spectrum compliance and hardware safety (see [LEGAL.md](LEGAL.md) and [SECURITY.md](SECURITY.md)).

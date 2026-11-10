@@ -40,8 +40,6 @@ You **do not** have to build or copy TCP repeater firmware for every companion r
 - **`prebuilt/heltec_v4_repeater_tcp.bin`** (and friends) stay as they were until the next repeater promotion.
 - **`prebuilt/releases/vX.Y.Z.W/`** may contain **only** companion binaries until a later repeater copy adds repeater files to that folder (or you ship repeater under a **different** `v*` — see [`REPEATER_RELEASE_PROCEDURE.md`](REPEATER_RELEASE_PROCEDURE.md)).
 
-Agent-oriented checklist: **[`AGENTS.md`](../AGENTS.md)**.
-
 ---
 
 ## 3. Copy release binaries

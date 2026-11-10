@@ -1,0 +1,9 @@
+# Publicly documented MeshCore protocol constants and test vectors (not private secrets):
+# - Default unauthenticated Public channel key (hex 8b3387e9c5cdea6ac9e5edbaa115cd72 / base64 izOH6cXN6mrJ5e26oRXNcg==)
+# - SHA-256("#test")[0:16] hashtag channel derivation vector (9cd8fcf22a47333b591d96a2b848b73f)
+docs/qr_codes.md:generic-api-key:10
+docs/companion_protocol.md:generic-api-key:460
+docs/companion_protocol.md:generic-api-key:466
+docs/faq.md:generic-api-key:380
+docs/faq.md:generic-api-key:497
+docs/faq.md:generic-api-key:501

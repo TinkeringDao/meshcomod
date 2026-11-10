@@ -6,7 +6,7 @@
 
 **Legacy:** older drops used **`repeater-1.0.x`**; the copy script places those under **`prebuilt/releases/repeater/repeater-1.0.x/`** if you recreate them in a fork.
 
-**Independence from companion:** Repeater does **not** need to ship on every companion version. The **release id** **`rX.Y.Z.W`** is the pin the flasher uses; it **may** match the companion train (**`v1.14.1.0`** ↔ **`r1.14.1.0`**) or a **different** four-part train. See **[`AGENTS.md`](../AGENTS.md)**.
+**Independence from companion:** Repeater does **not** need to ship on every companion version. The **release id** **`rX.Y.Z.W`** is the pin the flasher uses; it **may** match the companion train (**`v1.14.1.0`** ↔ **`r1.14.1.0`**) or a **different** four-part train.
 
 ---
 
@@ -86,4 +86,4 @@ Stage **`prebuilt/`**, **`prebuilt/releases/repeater/…`**, **`RELEASES.md`**, 
 | 3 | **`sh scripts/copy-repeater-release-bins.sh rX.Y.Z.W`** |
 | 4 | Update **`notes.md`** / **`RELEASES.md`**, commit, push |
 
-See also: [`prebuilt/README.md`](../prebuilt/README.md), [`REPEATER_TCP_COMPANION.md`](REPEATER_TCP_COMPANION.md), [`AGENTS.md`](../AGENTS.md).
+See also: [`prebuilt/README.md`](../prebuilt/README.md), [`REPEATER_TCP_COMPANION.md`](REPEATER_TCP_COMPANION.md).

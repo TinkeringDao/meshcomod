@@ -1,9 +1,9 @@
-site_name: MeshCore Docs
-site_url: https://meshcore-dev.github.io/meshcore/
-site_description: Documentation for the open source MeshCore firmware
+site_name: meshcomod Docs
+site_url: https://tinkeringdao.github.io/meshcomod/
+site_description: Documentation for the open source meshcomod firmware
 
-repo_name: meshcore-dev/meshcore
-repo_url: https://github.com/meshcore-dev/meshcore/
+repo_name: TinkeringDao/meshcomod
+repo_url: https://github.com/TinkeringDao/meshcomod/
 edit_uri: edit/main/docs/
 
 theme:

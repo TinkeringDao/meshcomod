@@ -15,8 +15,6 @@ Binaries are **not** always committed; this folder defines **where promoted buil
 
 **Companion** versions: **`vX.Y.Z.W`** under **`companion/`**. **Repeater TCP:** **`rX.Y.Z.W`** under **`repeater/`**, built with **`REPEATER_FIRMWARE_VERSION=rX.Y.Z.W-repeater-tcp`** (legacy **`vX.Y.Z.W-repeater-tcp`** in `out/` still works with **`copy-repeater-release-bins.sh vX.Y.Z.W`**). The meshcomod client lists **`prebuilt/releases/repeater`** for the repeater product (see **`meshcomod-client`** `shared/firmware_catalog.ts`). Legacy **`repeater-1.0.x`** may live under **`repeater/`** in forks.
 
-Agent checklist: **[`../AGENTS.md`](../AGENTS.md)**.
-
 **Companion** (USB+TCP meshcomod radio): after versioned builds in `out/`, run:
 
 ```bash
