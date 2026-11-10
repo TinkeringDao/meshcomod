@@ -3,6 +3,10 @@ name: PR Build Check
 permissions:
   contents: read
 
+concurrency:
+  group: pr-build-check-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 on:
   pull_request:
     branches: [main, dev]
@@ -28,23 +32,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         environment:
-          # ESP32-S3 (most common platform)
           - Heltec_v3_companion_radio_usb_tcp
           - heltec_v4_companion_radio_usb_tcp
           - heltec_v4_tft_companion_radio_usb_tcp_touch
-
     steps:
-      - name: Clone Repo
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-environment
 
-      - name: Build ${{ matrix.environment }}
-        run: pio run -e ${{ matrix.environment }}
+      - name: Build target firmware
+        env:
+          PIO_ENV: ${{ matrix.environment }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$PIO_ENV" =~ ^[a-zA-Z0-9_]+$ ]]; then
+            echo "ERROR: Invalid PlatformIO environment: '$PIO_ENV'" >&2
+            exit 1
+          fi
+          pio run -e "$PIO_ENV"

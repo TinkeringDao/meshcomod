@@ -16,13 +16,12 @@ on:
         type: string
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
-
-      - name: Clone Repo
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
@@ -31,12 +30,18 @@ jobs:
 
       - name: Build Firmwares
         env:
-          REPEATER_FIRMWARE_VERSION: ${{ github.event.inputs.repeater_version }}
+          REPEATER_FIRMWARE_VERSION: ${{ inputs.repeater_version }}
           DISABLE_DEBUG: '1'
-        run: /usr/bin/env bash build.sh build-repeater-firmwares
+        run: |
+          set -euo pipefail
+          if [[ ! "$REPEATER_FIRMWARE_VERSION" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+            echo "ERROR: Invalid repeater_version format: '$REPEATER_FIRMWARE_VERSION'" >&2
+            exit 1
+          fi
+          /usr/bin/env bash build.sh build-repeater-firmwares
 
       - name: Upload Workflow Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: repeater-firmwares
           path: out

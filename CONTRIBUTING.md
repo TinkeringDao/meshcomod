@@ -1,72 +1,33 @@
-# Contributing to meshcomod / MeshCore
+# Contributing to meshcomod
 
-Thanks for considering contributing to this project! By participating in this repository, you agree to abide by the [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) and the statutory interoperability, licensing, and regulatory terms documented in [`LEGAL.md`](LEGAL.md).
+Contributions that improve reliability, test coverage, documentation, or hardware support are welcome. By participating in this repository, you agree to abide by [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) and the statutory interoperability, licensing, and regulatory terms documented in [`LEGAL.md`](LEGAL.md).
 
-## How Can I Contribute?
+## Reporting Bugs & Security Issues
 
-### 1. Reporting Bugs
-- Use the **Issues** tracker (for security vulnerabilities, see [`SECURITY.md`](SECURITY.md) and report privately via [GitHub Security Advisories](https://github.com/TinkeringDao/meshcomod/security/advisories/new))
-- Use a clear title (e.g. "Crash when calling begin() with invalid pin")
-- Describe the **exact steps** to reproduce
-- Include your **board**, **IDE / PlatformIO version**, **library version**, and **relevant code snippet**
-- Attach a minimal complete example sketch if possible
-
-### 2. Suggesting Enhancements / New Features
-- Open an issue with the prefix **[Feature request]**
-- Explain the use-case -> what problem would this solve?
-- Describe your ideal API / behavior (code examples are very helpful)
-
-### 3. Submitting Code Changes (Pull Requests)
-
-#### Small fixes (typos, comments, examples, small bug fixes)
--> Open a pull request directly — no prior issue needed.
-
-#### Larger changes / new features
-1. Open an issue first to discuss the idea
-2. Get confirmation from maintainer(s)
-3. Fork the repo and create your branch (`fix/xxx`, `feature/yyy`, `docs/whatever`)
-4. Make your changes
-5. Update or add examples when appropriate
-6. Add/update comments in code
-7. Submit the pull request
-
-### Pull Request Guidelines
-
-- **One feature / fix = one pull request** (smaller PRs are easier & faster to review)
-- Use descriptive commit messages
-  - Good: `Fix I2C timeout handling on ESP32`
-  - Bad: `update`
-- Reference any related issue (`Fixes #123`, `Closes #89`, etc.)
-- If you change public API, update `README.md` and `library.json`
-- New features should include an example sketch in `examples/`
+- Report security vulnerabilities privately via [`SECURITY.md`](SECURITY.md) rather than public issues.
+- For general bug reports, include your target board, PlatformIO environment, firmware version, and steps to reproduce.
 
 ## Legal, Clean-Room Interoperability, & RF Regulatory Standards
 
 All contributions must comply with [`LEGAL.md`](LEGAL.md) and [`LICENSE`](LICENSE):
 
 - **MIT License**: All contributed source code is licensed under the [MIT License](LICENSE). Preserve all existing upstream copyright headers (`Scott Powell / Ripple Radios and MeshCore contributors`) and third-party license files (`arch/esp32/AsyncElegantOTA/LICENSE`, `arch/stm32/Adafruit_LittleFS_stm32/src/littlefs/LICENSE.md`).
-- **Privacy & Credential Hygiene**: Never commit Wi-Fi SSIDs/passwords, private cryptographic keys, personal GPS coordinates, or personal hardware serial numbers/MAC addresses.
+- **Privacy & Credential Hygiene**: Never commit Wi-Fi SSIDs/passwords, private cryptographic keys, personal names, physical locations, GPS coordinates, or hardware serial numbers/MAC addresses.
 - **No Proprietary Vendor Blobs**: Do not commit decompiled proprietary code, NDA-restricted SDK files, or third-party corporate logos/trademarks beyond factual hardware compatibility identifiers (indication of intended purpose and nominative fair use under `Article 14(1)(c) of Regulation (EU) 2017/1001 (EUTMR)` and `15 U.S.C. §§ 1115(b)(4), 1125`; see [`LEGAL.md`](LEGAL.md)).
-- **RF & Hardware Safety**: Board variant additions (`variants/`) must accurately document external Power Amplifier (`PA` / `FEM`) gain pins and PMIC voltage rails so operators can maintain compliance with `Directive 2014/53/EU (RED)`, `ETSI EN 300 220-1/-2`, `ETSI EN 300 328`, `ERC/REC 70-03`, `Decision (EU) 2017/1483`, and `FCC 47 C.F.R. Part 15.247 / Part 97` (see [`LEGAL.md`](LEGAL.md)).
+- **RF & Hardware Safety**: Board variant additions (`variants/`) must accurately document external Power Amplifier (`PA` / `FEM`) gain pins and PMIC voltage rails (`AXP192`, `AXP2101`, `BQ25896`, `<= 4.20–4.288 V`, `0–45 °C` NTC guard) so operators maintain compliance with `Directive 2014/53/EU (RED)`, `ETSI EN 300 220-1/-2`, `ETSI EN 300 328`, `ERC/REC 70-03`, `Decision (EU) 2017/1483`, and `FCC 47 C.F.R. Part 15.247 / Part 97`.
 
-### Pre-Merge Verification & RF Safety Gate Checklist
+## Local Build & Test Verification
 
-| Gate | Requirement | Verification Standard |
-|---|---|---|
-| **1. OPSEC & Zero-PII** | Zero personal identifiers, local paths, Wi-Fi credentials, or tokens in diff | Automated Gate 1 in `.github/workflows/autonomous-pr-review.yml` |
-| **2. Signed Commits** | All commits authored by `TinkeringDao <203040288+TinkeringDao@users.noreply.github.com>` with ED25519 SSH signature (`-S -s`) | Automated Gate 2 (`gpgsig` verification) |
-| **3. RF ERP & Duty Cycle** | `SX1262` / `LR1110` / `SX1276` & external PA/FEM configs respect `<= 1%` (`g1`) / `<= 10%` (`g3`) duty cycle & ERP limits (`ETSI EN 300 220-1/-2`, `Directive 2014/53/EU`, `FCC Part 15.247`) | Variant & radio preset audit (`variants/`, `LEGAL.md`) |
-| **4. PMIC & Battery Safety** | `AXP2101` / `AXP192` / `BQ25896` charge termination `<= 4.20–4.288 V` and `0–45 °C` NTC thermal protection preserved | Driver & board variant review (`variants/`) |
-| **5. Clean-Room & Legal** | `MIT` headers intact; `LEGAL.md` retains `Addendum: German Statutory References` | Automated Gate 3 & Stage 4B Agentic Review |
+Run native unit tests and a target firmware build locally before opening a pull request:
 
-## Coding Style
+```bash
+pio test -e native -e native_kiss_modem -vv
+pio run -e Heltec_v3_companion_radio_usb_tcp
+```
 
-Please follow the existing C++ style (per `.clang-format`):
+## Pull Request Workflow
 
-- 2 spaces indentation (no tabs)
-- `camelCase` for functions and variables
-- `UpperCamelCase` / `PascalCase` for class names
-- `#define` constants in `ALL_CAPS`
-- Keep lines < ~100 characters when reasonable
-
-(Consistency with existing code is more important than strict rules.)
+1. Create a focused topic branch from `main` (`feat/...`, `fix/...`, `docs/...`, `chore/...`, `ci/...`) — one concern per pull request.
+2. Keep commits atomic, use Conventional Commit headers (`feat:`, `fix:`, `docs:`, `ci:`, `refactor:`, `test:`), and sign all commits (`git config commit.gpgsign true`).
+3. Update `README.md` and `library.json` when changing public APIs, and follow existing C++ formatting (`.clang-format`: 2-space indentation, `camelCase` functions/variables, `PascalCase` classes, `ALL_CAPS` macros).
+4. Open a pull request against `main` summarizing the problem, root cause or design choice, and verification output. All pull requests squash-merge onto `main` once `ci` and `security` checks pass.
