@@ -71,9 +71,12 @@ jobs:
           echo "Gate 2 passed: All PR commits are authored by TinkeringDao and cryptographically signed."
 
       - name: Gate 3 — 8-Pillar Legal, German Addendum & Governance Verification
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -euo pipefail
-          echo "=== Gate 3: Legal & Governance File Integrity ==="
+          echo "=== Gate 3: Legal, Governance & Inline Review Threads Integrity ==="
           REQUIRED_FILES=(
             "LEGAL.md"
             "LICENSE"
@@ -94,7 +97,19 @@ jobs:
             echo "::error file=LEGAL.md::LEGAL.md is missing required 'Addendum: German Statutory References'"
             exit 1
           fi
-          echo "Gate 3 passed: All required governance files and German Statutory Addendum verified."
+          REPO_OWNER="${GITHUB_REPOSITORY%/*}"
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          UNRESOLVED_THREADS=$(gh api graphql \
+            -F owner="${REPO_OWNER}" \
+            -F name="${REPO_NAME}" \
+            -F pr="${PR_NUMBER}" \
+            -f query='query($owner: String!, $name: String!, $pr: Int!) { repository(owner: $owner, name: $name) { pullRequest(number: $pr) { reviewThreads(first: 100) { nodes { isResolved } } } } }' \
+            --jq '[.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved != true)] | length')
+          if [ "${UNRESOLVED_THREADS}" -gt 0 ]; then
+            echo "::error::PR #${PR_NUMBER} has ${UNRESOLVED_THREADS} unresolved inline review thread(s) (isResolved != true)"
+            exit 1
+          fi
+          echo "Gate 3 passed: All required governance files, German Statutory Addendum, and inline reviewThreads verified."
 
       - name: Gate 4 — Project Configuration & Build Manifest Verification
         run: |
@@ -123,6 +138,6 @@ jobs:
           All 4 verification gates succeeded on commit \`${HEAD_SHA}\`:
           - **Gate 1 (OPSEC & Zero-PII Scan)**: Passed on all modified files.
           - **Gate 2 (Cryptographic SSH Commit Signatures)**: Verified \`TinkeringDao <203040288+TinkeringDao@users.noreply.github.com>\` signature on all PR commits.
-          - **Gate 3 (8-Pillar Legal & Governance Check)**: Verified \`LEGAL.md\` (including \`Addendum: German Statutory References\`), \`LICENSE\`, \`SECURITY.md\`, \`CODE_OF_CONDUCT.md\`, \`.github/CODEOWNERS\`, \`AGENTS.md\`, \`CLAUDE.md\`, and \`docs/agents/autonomous-pipeline.md\`.
+          - **Gate 3 (8-Pillar Legal, Governance & Review Threads Check)**: Verified \`LEGAL.md\` (including \`Addendum: German Statutory References\`), \`LICENSE\`, \`SECURITY.md\`, \`CODE_OF_CONDUCT.md\`, \`.github/CODEOWNERS\`, \`AGENTS.md\`, \`CLAUDE.md\`, \`docs/agents/autonomous-pipeline.md\`, and zero unresolved \`reviewThreads\` (\`isResolved == true\`).
           - **Gate 4 (PlatformIO Configuration Integrity)**: Verified \`platformio.ini\` target environment definitions."
           gh pr review "${PR_NUMBER}" --approve --body "${BODY}"

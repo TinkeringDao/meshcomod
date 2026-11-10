@@ -8,11 +8,11 @@ Use this file as the **canonical engineering and operational entrypoint** for au
 
 All changes in `TinkeringDao/meshcomod` follow the **6-Stage Autonomous Development Pipeline** specified in [`docs/agents/autonomous-pipeline.md`](docs/agents/autonomous-pipeline.md) and enforced by [`.github/workflows/autonomous-pr-review.yml`](.github/workflows/autonomous-pr-review.yml):
 
-1. **Stage 1 — Context & Hindsight Recall**: Query `POST http://192.168.10.238:9100/v1/default/banks/satori/memories/recall` and review `AGENTS.md`, `LEGAL.md`, `SECURITY.md`, and `docs/agents/domain.md`.
+1. **Stage 1 — Context & Hindsight Recall**: Query `POST ${HINDSIGHT_URL}/v1/default/banks/${HINDSIGHT_BANK}/memories/recall` (e.g., `HINDSIGHT_URL=http://127.0.0.1:9100`) and review `AGENTS.md`, `LEGAL.md`, `SECURITY.md`, and `docs/agents/domain.md`.
 2. **Stage 2 — Branch Isolation & Signed TDD Implementation**: Branch from `origin/main` (`feat/*`, `fix/*`, `chore/*`, `docs/*`). Author all commits as `TinkeringDao <203040288+TinkeringDao@users.noreply.github.com>` with ED25519 SSH commit signing enabled (`git config commit.gpgsign true`).
 3. **Stage 3 — Pull Request Creation**: Open a PR against `main` containing `## Summary`, `## Evidence`, and `## Merge Danger` (`Door: two-way | one-way`, `Blast Radius: local | module | system`).
 4. **Stage 4 — Dual GitHub PR Review**:
-   - **Automated CI Gate** ([`.github/workflows/autonomous-pr-review.yml`](.github/workflows/autonomous-pr-review.yml)): Verifies OPSEC/Zero-PII on changed files, SSH commit signatures on all PR commits, 8-pillar `LEGAL.md` + German Statutory Addendum & governance file integrity, and `platformio.ini` configuration integrity.
+   - **Automated CI Gate** ([`.github/workflows/autonomous-pr-review.yml`](.github/workflows/autonomous-pr-review.yml)): Verifies OPSEC/Zero-PII on changed files, SSH commit signatures on all PR commits, 8-pillar `LEGAL.md` + German Statutory Addendum & governance file integrity (including zero unresolved inline `reviewThreads`), and `platformio.ini` configuration integrity.
    - **Independent Agentic Spec/Code/Security Review**: Audits `gh pr diff` for architectural, RF/PMIC hardware safety, and legal compliance and posts a structured review via `gh pr review --comment`.
 5. **Stage 5 — Autonomous Remediation Loop**: Remediate any review finding or CI failure in a signed commit on the PR branch and post a remediation summary comment.
 6. **Stage 6 — Automated Approval, Squash Merge & Hindsight Retention**: `github-actions[bot]` approves the PR (`gh pr review --approve`), satisfying `Protect main branch` (`required_approving_review_count: 1`, `require_last_push_approval: true`), followed by `gh pr merge --squash --delete-branch` and Hindsight memory retention.
