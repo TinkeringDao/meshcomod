@@ -1048,10 +1048,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#stage-1-context-hindsight-recall" class="md-nav__link">
+  <a href="#stage-1-repository-context-spec-alignment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stage 1: Context &amp; Hindsight Recall
+        Stage 1: Repository Context &amp; Spec Alignment
       
     </span>
   </a>
@@ -1131,10 +1131,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#stage-6-automated-approval-squash-merge-hindsight-retention" class="md-nav__link">
+  <a href="#stage-6-automated-approval-squash-merge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stage 6: Automated Approval, Squash Merge &amp; Hindsight Retention
+        Stage 6: Automated Approval &amp; Squash Merge
       
     </span>
   </a>
@@ -1223,10 +1223,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#stage-1-context-hindsight-recall" class="md-nav__link">
+  <a href="#stage-1-repository-context-spec-alignment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stage 1: Context &amp; Hindsight Recall
+        Stage 1: Repository Context &amp; Spec Alignment
       
     </span>
   </a>
@@ -1306,10 +1306,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#stage-6-automated-approval-squash-merge-hindsight-retention" class="md-nav__link">
+  <a href="#stage-6-automated-approval-squash-merge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Stage 6: Automated Approval, Squash Merge &amp; Hindsight Retention
+        Stage 6: Automated Approval &amp; Squash Merge
       
     </span>
   </a>
@@ -1346,7 +1346,7 @@
 <hr />
 <h2 id="architecture-overview">Architecture Overview</h2>
 <pre><code class="language-mermaid">flowchart TD
-    S1[&quot;Stage 1: Context &amp; Hindsight Recall&quot;] --&gt; S2[&quot;Stage 2: Branch Isolation &amp; Signed TDD Implementation&quot;]
+    S1[&quot;Stage 1: Repository Context &amp; Spec Alignment&quot;] --&gt; S2[&quot;Stage 2: Branch Isolation &amp; Signed TDD Implementation&quot;]
     S2 --&gt; S3[&quot;Stage 3: Pull Request Creation (Summary / Evidence / Merge Danger)&quot;]
     S3 --&gt; S4A[&quot;Stage 4A: GitHub Actions 4-Gate CI (.github/workflows/autonomous-pr-review.yml)&quot;]
     S3 --&gt; S4B[&quot;Stage 4B: Independent Agentic Spec, Code &amp; Security Review&quot;]
@@ -1355,17 +1355,12 @@
     S5 -- &quot;Yes&quot; --&gt; REM[&quot;Autonomous Remediation Loop (Signed Commit + Push)&quot;]
     REM --&gt; S4A
     REM --&gt; S4B
-    S5 -- &quot;No (Zero Unresolved Findings)&quot; --&gt; S6[&quot;Stage 6: Automated Bot Approval, Squash Merge &amp; Hindsight Retention&quot;]
+    S5 -- &quot;No (Zero Unresolved Findings)&quot; --&gt; S6[&quot;Stage 6: Automated Bot Approval &amp; Squash Merge&quot;]
 </code></pre>
 <hr />
-<h2 id="stage-1-context-hindsight-recall">Stage 1: Context &amp; Hindsight Recall</h2>
+<h2 id="stage-1-repository-context-spec-alignment">Stage 1: Repository Context &amp; Spec Alignment</h2>
 <p>Before modifying any source file (<code>src/</code>, <code>examples/</code>, <code>arch/</code>), board variant (<code>variants/</code>), or build configuration (<code>platformio.ini</code>), the autonomous agent MUST:</p>
 <ol>
-<li><strong>Query Hindsight Semantic Memory</strong>:
-   <code>bash
-   curl -s -X POST http://192.168.10.238:9100/v1/default/banks/satori/memories/recall \
-     -H "Content-Type: application/json" \
-     -d '{"query": "meshcomod MeshCore multi-transport companion repeater SX1262 LR1110 AXP2101 BQ25896 legal RF safety"}'</code></li>
 <li><strong>Read Repository Governance &amp; Domain Specifications</strong>:</li>
 <li><a href="../../AGENTS.md"><code>AGENTS.md</code></a> — Target board/variant architecture, PlatformIO &amp; <code>build.sh</code> commands, prebuilt release invariants, and RF/PMIC safety boundaries.</li>
 <li><a href="../../LEGAL.md"><code>LEGAL.md</code></a> — 8-pillar legal compliance framework, EU RED / ETSI / FCC RF limits, and the German Statutory Addendum (<code>Addendum: German Statutory References</code>).</li>
@@ -1426,7 +1421,7 @@ and posts a structured review on the Pull Request (<code>gh pr review &lt;PR_NUM
 <li>A structured remediation summary comment (<code>gh pr comment &lt;PR_NUMBER&gt; --body "## Autonomous Remediation Complete ..."</code>) is posted on the PR referencing the remediation commit SHA.</li>
 </ol>
 <hr />
-<h2 id="stage-6-automated-approval-squash-merge-hindsight-retention">Stage 6: Automated Approval, Squash Merge &amp; Hindsight Retention</h2>
+<h2 id="stage-6-automated-approval-squash-merge">Stage 6: Automated Approval &amp; Squash Merge</h2>
 <ol>
 <li><strong>Automated Bot Approval</strong>:</li>
 <li>Once all 4 CI gates succeed on the latest commit and <code>HEAD_REPO == BASE_REPO &amp;&amp; PR_AUTHOR == 'TinkeringDao'</code>, <code>.github/workflows/autonomous-pr-review.yml</code> executes <code>gh pr review "${PR_NUMBER}" --approve</code> as <code>github-actions[bot]</code>.</li>
@@ -1435,12 +1430,6 @@ and posts a structured review on the Pull Request (<code>gh pr review &lt;PR_NUM
 <li>The approved PR is merged into <code>main</code> via:
      <code>bash
      gh pr merge &lt;PR_NUMBER&gt; --squash --delete-branch</code></li>
-<li><strong>Hindsight Knowledge Retention</strong>:</li>
-<li>Post-merge architectural decisions, resolved review findings, and commit SHAs are persisted to Hindsight:
-     <code>bash
-     curl -s -X POST http://192.168.10.238:9100/v1/default/banks/satori/memories \
-       -H "Content-Type: application/json" \
-       -d '{"items": [{"content": "Merged PR #&lt;N&gt; in TinkeringDao/meshcomod: &lt;summary&gt;"}]}'</code></li>
 </ol>
 
 
