@@ -5,7 +5,7 @@
 **Highlights**
 
 - **Heltec V4 TFT + capacitive touch:** `DISPLAY_ROTATION=2` for correct panel orientation on touch builds.
-- **Release tooling:** [`AGENTS.md`](../../../AGENTS.md) playbook, [`scripts/validate-prebuilt-release-folder.sh`](../../../scripts/validate-prebuilt-release-folder.sh`), updated companion/repeater release docs and prebuilt READMEs.
+- **Release tooling:** [`scripts/validate-prebuilt-release-folder.sh`](../../../scripts/validate-prebuilt-release-folder.sh), updated companion/repeater release docs and prebuilt READMEs.
 - **This folder:** meshcomod USB+TCP companions (V4 OLED, V4 TFT+touch, V3) and Heltec V4 **companion** extras only (USB / BLE / Wi‑Fi for OLED + TFT). **TCP repeater** (`*_repeater_tcp`) latest pin: **[`repeater/r1.14.1.1`](../../repeater/r1.14.1.1/)**; plain mesh repeaters / older TCP rows may still be under **[`repeater/r1.14.1.0`](../../repeater/r1.14.1.0/)**. Rolling [`prebuilt/`](../../) repeater stable names follow the newest **`copy-repeater-release-bins.sh`** run.
 
 **Primary prebuilts (flasher / OTA)**

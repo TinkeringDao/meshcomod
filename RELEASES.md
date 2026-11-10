@@ -626,7 +626,7 @@ Versioned prebuilts are listed here so you can **roll back** if a newer release 
 
 **Highlights:**
 - **Heltec V4 TFT touch:** `DISPLAY_ROTATION=2` in variant config for correct display orientation.
-- **Docs / process:** [`AGENTS.md`](AGENTS.md) prebuilt playbook, `validate-prebuilt-release-folder.sh`, companion/repeater release doc updates.
+- **Docs / process:** `validate-prebuilt-release-folder.sh`, companion/repeater release doc updates.
 - **TCP repeater (Wi‑Fi):** new pin **[`prebuilt/releases/repeater/r1.14.1.1/`](prebuilt/releases/repeater/r1.14.1.1/)** — SNTP after Wi‑Fi connect (UTC), meshcomod **repeater.meshcomod.com** UI (browser clock sync, locale time, decimal lat/lon + map). On-device string **`meshcomod-r1.14.1.1-repeater-tcp-<sha>`**. Plain mesh repeaters / older TCP row: **[`prebuilt/releases/repeater/r1.14.1.0/`](prebuilt/releases/repeater/r1.14.1.0/)** until extras copy refreshes them.
 - **Prebuilts:** [`prebuilt/releases/companion/v1.14.1.1/`](prebuilt/releases/companion/v1.14.1.1/) — USB+TCP companions and Heltec V4 extras only. Rolling [`prebuilt/`](prebuilt/) repeater stable names (`heltec_v4_repeater_tcp.bin`, etc.) match the latest **`copy-repeater-release-bins.sh`** run (target **`r1.14.1.1`** for current TCP repeater).
 

@@ -1,33 +1,37 @@
 name: Setup Build Environment
+outputs:
+  version:
+    description: "Derived firmware version string"
+    value: ${{ steps.extract-version.outputs.version }}
 runs:
   using: "composite"
   steps:
-
     - name: Init Cache
-      uses: actions/cache@v5
+      # zizmor: ignore[cache-poisoning] -- caches pip and PlatformIO download archives keyed by platformio.ini hash
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: |
           ~/.cache/pip
           ~/.platformio/.cache
-        key: ${{ runner.os }}-pio
+        key: ${{ runner.os }}-pio-${{ hashFiles('platformio.ini') }}
+        restore-keys: |
+          ${{ runner.os }}-pio-
 
     - name: Install Python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
       with:
         python-version: '3.13'
 
     - name: Install PlatformIO
       shell: bash
-      run: |
-        pip install --upgrade platformio
+      run: python -m pip install --upgrade pip platformio
 
-    # Tags like companion-v1.14.0.35 must yield FIRMWARE_VERSION=v1.14.0.35 (not just the last segment).
     - name: Extract Version from Git Tag
+      id: extract-version
       shell: bash
       run: |
+        set -euo pipefail
         if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-          # Triggered by a tag push. Strip the KNOWN track prefix rather than cutting
-          # at the last '-', so multi-dash tracks (room-server-) survive intact.
           GIT_TAG_NAME="${GITHUB_REF#refs/tags/}"
           case "$GIT_TAG_NAME" in
             companion-*)    VERSION_STRING="${GIT_TAG_NAME#companion-}" ;;
@@ -36,9 +40,11 @@ runs:
             *)              VERSION_STRING="${GIT_TAG_NAME##*-}" ;;
           esac
         else
-          # triggered by a workflow dispatch (e.g: refs/heads/main)
-          # strip "refs/heads/" prefix and replace any remaining "/" with "-" to protect file paths
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          VERSION_STRING=$(echo "$BRANCH_NAME" | tr '/' '-')
+          VERSION_STRING="$(printf '%s' "$BRANCH_NAME" | tr '/' '-')"
         fi
-        echo "GIT_TAG_VERSION=${VERSION_STRING}" >> "$GITHUB_ENV"
+        if [[ ! "$VERSION_STRING" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+          echo "ERROR: Invalid derived version string: '$VERSION_STRING'" >&2
+          exit 1
+        fi
+        echo "version=${VERSION_STRING}" >> "$GITHUB_OUTPUT"

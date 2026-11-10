@@ -2,37 +2,36 @@ name: Build and deploy Docs site to GitHub Pages
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
   github-pages:
+    name: github-pages
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
-
-      - name: Checkout Repo
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.13'
 
-      - name: Build
+      - name: Build documentation
         run: |
-          pip install mkdocs-material
+          set -euo pipefail
+          python -m pip install --upgrade pip mkdocs-material
           mkdocs build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4.1.0
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          cname: docs.meshcore.nz
           publish_dir: ./site
           publish_branch: 'gh-pages'
